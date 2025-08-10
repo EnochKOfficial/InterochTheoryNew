@@ -1,13 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Interoch Theory Research</title>
-
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;700&family=Crimson+Pro:wght@400;500;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;700&amp;family=Crimson+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
 <style>
   :root{box-sizing:border-box}
   *,*::before,*::after{box-sizing:inherit}
@@ -19,6 +18,7 @@
     font-family: 'Crimson Pro', serif;
     color: black;
     line-height: 1.7;
+    scroll-behavior: smooth;
   }
 
   nav {
@@ -126,7 +126,7 @@
     color: #7353ff;
   }
 
-  h2 {
+  h2, h3 {
     border-bottom: 1px solid #ddd;
     padding-bottom: 8px;
     margin-top: 40px;
@@ -141,7 +141,7 @@
   .formula {
     display: block;
     text-align: center;
-    font-weight: bold;
+    font-weight:lighter;
     font-size: 1.2rem;
     margin: 20px 0;
   }
@@ -152,7 +152,7 @@
   }
 
   .research-entry {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 20px;
   }
@@ -198,86 +198,175 @@
 </style>
 </head>
 <body>
-
-<nav id="navbar" aria-label="Main navigation">
-  <div class="nav-links">
-    <a href="#intro">Introduction</a>
-    <a href="#definitions">Definitions</a>
-    <a href="#types">Types</a>
-    <a href="#theorems">Theorems</a>
-    <a href="#advanced">Advanced</a>
-    <a href="#applications">Applications</a>
-    <a href="#future">Future</a>
-  </div>
-  <div class="brand">EnochR.</div>
-  <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</nav>
-
-<div class="listen-btn" id="listenBtn" title="Read Aloud">
-  <svg viewBox="0 0 24 24">
-    <path d="M3 10v4h4l5 5V5L7 10H3z"/>
-    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
-    <path d="M19.07 4.93a9.969 9.969 0 0 1 0 14.14" stroke="#7353ff" fill="none"/>
-  </svg>
+<nav aria-label="Main navigation" id="navbar">
+<div class="nav-links">
+<a href="#intro">Introduction</a>
+<a href="#definitions">Definitions</a>
+<a href="#types">Types</a>
+<a href="#theorems">Axioms/Theorems</a>
+<a href="#advanced">Advanced</a>
+<a href="#applications">Applications</a>
+<a href="#future">Future</a>
 </div>
-
+<div class="brand">EnochR.</div>
+<div class="hamburger" id="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</nav>
+<div class="listen-btn" id="listenBtn" title="Read Aloud">
+<svg viewbox="0 0 24 24">
+<path d="M3 10v4h4l5 5V5L7 10H3z"></path>
+<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"></path>
+<path d="M19.07 4.93a9.969 9.969 0 0 1 0 14.14" fill="none" stroke="#7353ff"></path>
+</svg>
+</div>
 <div class="container">
-  <h1 id="intro">Interoch Numbers Theory: A Comprehensive Framework</h1>
-  <p>
-    The <span class="keyword">Interoch Numbers Theory</span> explores sets of integers closed under specific <span class="keyword">digit-wise operations</span>. If \( S \) is such a set and \( o \) is the operation, then for every \( n \in S \), applying \( o \) to its digits yields another number in \( S \).
+<h1 id="intro">Interoch Numbers Theory: A Comprehensive Framework</h1>
+<p>
+    The <span class="keyword">Interoch Numbers Theory</span> explores sets of integers closed under specific <span class="keyword">digit-wise operations</span>. If S is such a set and ∘ is the operation, then for every n in S, applying ∘ to its digits yields another number in S.
   </p>
+<h2 id="definitions">1. Foundational Definitions</h2>
+<p>Let <span class="keyword">d(n)</span> denote the digits of n.</p>
+<p>An Interoch set satisfies:</p>
+<p class="formula">∀n ∈ S, ∘(d(n))∈S</p>
+<h3 class="keyword">1.1 Closure(∘):</h3>
+<p>The operation ∘ ensures no <span class="keyword">escape </span>from the set S.</p>
+<h2 id="types">2. Core Interoch Sets</h2>
+<ul>
+<li><span class="keyword">Addinteroch</span> – Sum of digits.</li>
+<p>Example: 58 → 5 + 8 = 13.</p>
+<li><span class="keyword">Subinteroch</span> – Absolute difference of digits.</li>
+<p>Example: 94 → |9 − 4| = 5.</p>
+<li><span class="keyword">Neutinteroch</span> – Mix of addition and subtraction.</li>
+<p>Example: 47 → (4 + 7) − |4 − 7| = 11 − 3 = 8.</p>
+<li><span class="keyword">Mulinteroch</span> – Product of digits (Order Sensitive).</li>
+<p>Example: 81 → 8 / 1 = 8</p>
+<li><span class="keyword">Divinteroch</span> – Closed under digit division.</li>
+<p>Example: 47 → (4 + 7) − |4 − 7| = 11 − 3 = 8.</p>
+</ul>
+<h2 id="theorems">3. Axiom, Theorems and Properties</h2>
 
-  <h2 id="definitions">Foundational Definitions</h2>
-  <p>Let <span class="keyword">d(n)</span> denote the digits of \( n \). Closure means \( o(d(n)) \in S \) for all \( n \in S \).</p>
-
-  <h2 id="types">Key Types of Interoch Sets</h2>
-  <ul>
-    <li><span class="keyword">Addinteroch</span> – Sum of digits. Example: 58 → 5 + 8 = 13.</li>
-    <li><span class="keyword">Subinteroch</span> – Absolute difference of digits. Example: 94 → |9 − 4| = 5.</li>
-    <li><span class="keyword">Mulinteroch</span> – Product of digits. Example: 39 → 3 × 9 = 27.</li>
-    <li><span class="keyword">Neutinteroch</span> – Mix of addition and subtraction. Example: 47 → (4 + 7) − |4 − 7| = 11 − 3 = 8.</li>
-    <li><span class="keyword">Codeinteroch</span> – Digit shift transformations. Example: 123 → shift +2 → 345.</li>
-    <li><span class="keyword">Swappinteroch</span> – Swap positions of digits. Example: 73 → 37.</li>
-    <li><span class="keyword">Splitinteroch</span> – Split digits into groups and operate. Example: 123 → 1 + 23 = 24.</li>
-    <li><span class="keyword">Groupinteroch</span> – Group and transform digits flexibly. Example: 1242 → 12 + 42 = 54.</li>
-  </ul>
-
-  <h2 id="theorems">Theorems and Properties</h2>
-  <p>Example: Any <span class="keyword">Addinteroch</span> set shares a digital root modulo 9.</p>
-
-  <h2 id="advanced">Advanced Constructs</h2>
-  <p>Includes <span class="keyword">Fractalinteroch</span> (recursive digit sums), <span class="keyword">Loopinteroch</span> (number cycles), and compositional types like <span class="keyword">Chaininteroch</span>.</p>
-
-  <h2 id="applications">Applications</h2>
-  <p>
-    Potential uses in <span class="keyword">recreational mathematics</span>, <span class="keyword">cryptography</span>, and <span class="keyword">algorithm design</span>.
+<h3>3.1 Axioms:</h3>
+<p><span class="keyword">Axiom 1 (Closure Under Digit Operations)</span><br/>
+For any Interoch Set S and operation ∘,<br/>
+<span class="formula">∀n ∈ S, ∘(d(n)) ∈ S,</span><br/>
+where d(n) extracts the digits of n, and ∘ is a well-defined digit-wise operation (e.g., sum, product, shift).</p>
+<p>Corollary:</p>
+<ul>
+<li>If ∘ is deterministic (e.g., digit sum), S is uniquely closed.</li>
+<li>If ∘ is non-deterministic (e.g., signed digit difference), S must contain all possible outputs.</li>
+</ul>
+<p><span class="keyword">Axiom 2 (Minimality Condition)</span><br/>
+An Interoch Set S is minimal if:<br/>
+1. S is closed under ∘.<br/>
+2. No proper subset of S satisfies (1).</p>
+<p>Examples:<br/>
+{6, 60} is minimal for Addinteroch.<br/>
+{0} is trivial-minimal for Subinteroch.</p>
+<p><span class="keyword">Axiom 3 (Operation - Independent Invariance)</span><br/>
+An Interoch Set S may satisfy multiple operations simultaneously (e.g., additive and multiplicative closure).<br/>
+Example: {1} is closed under digit sum (1 → 1) and digit product (1 → 1).</p>
+<h4>Structural Principles</h4>
+<p><span class="keyword">Principle of Non-Triviality:</span><br/>
+A non-trivial Interoch Set must contain at least two numbers linked dynamically (e.g., 38 → 6).</p>
+<p><span class="keyword">Principle of Maximality:</span><br/>
+A maximal Interoch Set cannot be extended without violating closure.</p>
+<h3>3.2 Minimal and Maximal Sets:</h3>
+<p><span class="keyword">Minimal</span>:- Smallest non-trivial closed set.</p>
+<p> Example: {6,60} is minimal for Addinteroch.</p>
+<p><span class="keyword">Maximal</span>:- Largest possible closed set (ofter infinite).</p>
+<p>Example: All numbers divisible by 9 for Addinteroch.</p>
+<h3>3.3 Theorem - 1:</h3>
+<p>Any Addinteroch set must share a digital root (mod 9).</p>
+<p>Proof:  Digit sums preserve modulo 9.</p>
+<h3>3.5 Fixed Points and Invarience:</h3>
+<p>Single - digit numbers are fixed points for most operations.</p>
+<p><span class="keyword">Non - Trivial invarience</span>: {145} for factorial digit sum (1! + 4! + 5! = 145)</p>
+<h2 id="advanced">4. Advanced Constructs</h2>
+<h3>4.1 Positional Interochs:</h3>
+<ul>
+<li><span class="keyword">Swappinteroch</span> – Closed under digit swaps.</li>
+<p>Example: {13,31}.</p>
+<li><span class="keyword">Splitinteroch</span> – Operate on grouped digits.</li>
+<p>Example: 123 → 1 + 23 = 24.</p>
+</ul>
+<h3>4.2 Recursive Interochs:</h3>
+<ul>
+<li><span class="keyword">Fractalinteroch</span> – Recursive digit sums.</li>
+<p>Example: 987 → 24 → 6.</p>
+<li><span class="keyword">Loopinteroch</span> – Numbers cycle back to themselves.</li>
+<p>Example: 08 → 0 + 8 = 8.</p>
+</ul>
+<h3>4.3 Compositional Interochs:</h3>
+<ul>
+<li><span class="keyword">Multiinteroch</span> – Chains of operations.</li>
+<p>Example: 14 → 1 + 4 = 5; 5 × 2 = 10.</p>
+<li><span class="keyword">Groupinteroch</span> – Segment and then operate rule.</li>
+<p>Example: 1242 → 12 + 42 = 54.</p>
+</ul>
+<h3>4.4 Transformational Interochs:</h3>
+<ul>
+<li><span class="keyword">Codeinteroch</span> – Digt shifts.</li>
+<p>Example: +2 to each digit in 123 → 345.</p>
+</ul>
+<h2 id="applications">5. Applications</h2>
+<h3>6.1 Recreational Mathematics: </h3>
+<p>
+<span class="keyword">Puzzle Design</span>: Create interoch-based riddles.
   </p>
-
-  <h2 id="future">Future Directions</h2>
-  <p>
-    Explore <span class="keyword">algebraic structures</span> of Interoch sets, graph models, and links to <span class="keyword">automata theory</span>. Develop Interoch-based games and formal taxonomies.
+<p>
+<span class="keyword">Game Mechanics:</span>: Board games where moves follow Codeinteroch 
   </p>
-
-  <h2 id="research">Recent Research</h2>
-  <div class="research-entry">
-    <div class="date">2025-08-10</div>
-    <h3>Fractalinteroch Patterns in Digital Time</h3>
-    <p>
+<h3>6.2 Computational Exploration: </h3>
+<p><span class="keyword">Algorithm</span>: In Python:</p>
+<pre>
+    def interoch_closure(seed, operation):  
+    S = set(seed)  
+    while True:  
+        new = {operation(n) for n in S}  
+        if new.issubset(S): break  
+        S.update(new)  
+    return S  
+  </pre>
+<h3>6.3 Cryptographic potential: </h3>
+<p>
+<span class="keyword">Digit - Operation Keys</span>: Use interoch properties for hashing or encoding.
+  </p>
+<h2 id="future">4. Future Directions</h2>
+<p>
+<span class="keyword">Algebraic structures</span>: Study of Interoch sets as <span class="keyword">monoids or semigroups</span>.
+  </p>
+<p>
+<span class="keyword">Graph Theory</span>: Models numbers as nodes, operations as edges.
+  </p>
+<p>
+<span class="keyword">Cross - Disciplinary Links</span>: Connect to <span class="keyword">automata theory</span> or dynamical systems.
+  </p>
+<h2 id="research">Recent Research</h2>
+<div class="research-entry">
+<div class="date">2025-08-10</div>
+<h3>Fractalinteroch Patterns in Digital Time</h3>
+<p>
       Repeated <span class="keyword">digit multiplication</span> in clock times leads to cycles within a <span class="keyword">Fractalinteroch</span> structure.
     </p>
-    <div class="formula">123 → 1×2×3 = 6 → 6×(nothing) = 6</div>
-  </div>
+<div class="formula">123 → 1×2×3 = 6 → 6×(nothing) = 6</div>
 </div>
-
+</div>
 <footer>
   Research by Enoch (2024 – Present)
 </footer>
-
 <script>
+  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      const offset = document.getElementById('navbar').offsetHeight + 20; // extra gap
+      const targetPos = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: targetPos, behavior: 'smooth' });
+    });
+  });
   window.addEventListener('load', () => {
     document.getElementById('navbar').style.top = '20px';
   });
@@ -306,6 +395,5 @@
     }
   });
 </script>
-
 </body>
 </html>
