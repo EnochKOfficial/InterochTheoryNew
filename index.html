@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interoch Theory Research</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;700&family=Crimson+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{box-sizing:border-box}
+  *,*::before,*::after{box-sizing:inherit}
+
+  body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Crimson Pro', serif;
+    color: black;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 920px;
+    min-width: 260px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10000;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: top 0.8s cubic-bezier(.2,.9,.2,1);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #7353ff;
+    font-weight: bold;
+    font-family: 'Instrument Serif', serif;
+    padding: 6px 10px;
+    transition: transform 0.28s ease, color 0.18s ease;
+    display: inline-block;
+    line-height: 1;
+  }
+
+  nav a:hover {
+    transform: translateY(-3px);
+  }
+
+  .brand {
+    font-family: 'Instrument Serif', serif;
+    font-weight: bold;
+    color: #7353ff;
+    font-size: 1.1rem;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  .hamburger span {
+    width: 20px;
+    height: 2px;
+    background-color: #7353ff;
+    display: block;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 10px 15px;
+      width: max-content;
+    }
+    .nav-links.active {
+      display: flex;
+    }
+    .hamburger {
+      display: flex;
+    }
+    .brand {
+      display: block;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .brand {
+      display: none;
+    }
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 120px auto 50px;
+    padding: 20px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Instrument Serif', serif;
+    color: #7353ff;
+  }
+
+  h2 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    margin-top: 40px;
+  }
+
+  .date {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #888;
+  }
+
+  .formula {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 20px 0;
+  }
+
+  .keyword {
+    color: #a38fff;
+    font-weight: 500;
+  }
+
+  .research-entry {
+    margin-bottom: 40px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #888;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+  }
+
+  /* Listening Button */
+  .listen-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: transform 0.28s ease;
+    z-index: 10001;
+  }
+  .listen-btn:hover {
+    transform: translateY(-3px);
+  }
+  .listen-btn svg {
+    width: 26px;
+    height: 26px;
+    stroke: #7353ff;
+    fill: none;
+    stroke-width: 2;
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar" aria-label="Main navigation">
+  <div class="nav-links">
+    <a href="#intro">Introduction</a>
+    <a href="#definitions">Definitions</a>
+    <a href="#types">Types</a>
+    <a href="#theorems">Theorems</a>
+    <a href="#advanced">Advanced</a>
+    <a href="#applications">Applications</a>
+    <a href="#future">Future</a>
+  </div>
+  <div class="brand">EnochR.</div>
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<div class="listen-btn" id="listenBtn" title="Read Aloud">
+  <svg viewBox="0 0 24 24">
+    <path d="M3 10v4h4l5 5V5L7 10H3z"/>
+    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
+    <path d="M19.07 4.93a9.969 9.969 0 0 1 0 14.14" stroke="#7353ff" fill="none"/>
+  </svg>
+</div>
+
+<div class="container">
+  <h1 id="intro">Interoch Numbers Theory: A Comprehensive Framework</h1>
+  <p>
+    The <span class="keyword">Interoch Numbers Theory</span> explores sets of integers closed under specific <span class="keyword">digit-wise operations</span>. If \( S \) is such a set and \( o \) is the operation, then for every \( n \in S \), applying \( o \) to its digits yields another number in \( S \).
+  </p>
+
+  <h2 id="definitions">Foundational Definitions</h2>
+  <p>Let <span class="keyword">d(n)</span> denote the digits of \( n \). Closure means \( o(d(n)) \in S \) for all \( n \in S \).</p>
+
+  <h2 id="types">Key Types of Interoch Sets</h2>
+  <ul>
+    <li><span class="keyword">Addinteroch</span> – Sum of digits. Example: 58 → 5 + 8 = 13.</li>
+    <li><span class="keyword">Subinteroch</span> – Absolute difference of digits. Example: 94 → |9 − 4| = 5.</li>
+    <li><span class="keyword">Mulinteroch</span> – Product of digits. Example: 39 → 3 × 9 = 27.</li>
+    <li><span class="keyword">Neutinteroch</span> – Mix of addition and subtraction. Example: 47 → (4 + 7) − |4 − 7| = 11 − 3 = 8.</li>
+    <li><span class="keyword">Codeinteroch</span> – Digit shift transformations. Example: 123 → shift +2 → 345.</li>
+    <li><span class="keyword">Swappinteroch</span> – Swap positions of digits. Example: 73 → 37.</li>
+    <li><span class="keyword">Splitinteroch</span> – Split digits into groups and operate. Example: 123 → 1 + 23 = 24.</li>
+    <li><span class="keyword">Groupinteroch</span> – Group and transform digits flexibly. Example: 1242 → 12 + 42 = 54.</li>
+  </ul>
+
+  <h2 id="theorems">Theorems and Properties</h2>
+  <p>Example: Any <span class="keyword">Addinteroch</span> set shares a digital root modulo 9.</p>
+
+  <h2 id="advanced">Advanced Constructs</h2>
+  <p>Includes <span class="keyword">Fractalinteroch</span> (recursive digit sums), <span class="keyword">Loopinteroch</span> (number cycles), and compositional types like <span class="keyword">Chaininteroch</span>.</p>
+
+  <h2 id="applications">Applications</h2>
+  <p>
+    Potential uses in <span class="keyword">recreational mathematics</span>, <span class="keyword">cryptography</span>, and <span class="keyword">algorithm design</span>.
+  </p>
+
+  <h2 id="future">Future Directions</h2>
+  <p>
+    Explore <span class="keyword">algebraic structures</span> of Interoch sets, graph models, and links to <span class="keyword">automata theory</span>. Develop Interoch-based games and formal taxonomies.
+  </p>
+
+  <h2 id="research">Recent Research</h2>
+  <div class="research-entry">
+    <div class="date">2025-08-10</div>
+    <h3>Fractalinteroch Patterns in Digital Time</h3>
+    <p>
+      Repeated <span class="keyword">digit multiplication</span> in clock times leads to cycles within a <span class="keyword">Fractalinteroch</span> structure.
+    </p>
+    <div class="formula">123 → 1×2×3 = 6 → 6×(nothing) = 6</div>
+  </div>
+</div>
+
+<footer>
+  Research by Enoch (2024 – Present)
+</footer>
+
+<script>
+  window.addEventListener('load', () => {
+    document.getElementById('navbar').style.top = '20px';
+  });
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.toggle('active');
+  });
+
+  const listenBtn = document.getElementById('listenBtn');
+  let isReading = false;
+  let utterance;
+
+  listenBtn.addEventListener('click', () => {
+    if (!isReading) {
+      const textContent = document.querySelector('.container').innerText;
+      utterance = new SpeechSynthesisUtterance(textContent);
+      const voices = speechSynthesis.getVoices();
+      const formalVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('serena')) || voices.find(v => v.lang.startsWith('en'));
+      if (formalVoice) utterance.voice = formalVoice;
+      utterance.rate = 0.95;
+      speechSynthesis.speak(utterance);
+      isReading = true;
+    } else {
+      speechSynthesis.cancel();
+      isReading = false;
+    }
+  });
+</script>
+
+</body>
+</html>
