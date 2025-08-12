@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interoch Numbers Theory — Research Notes</title>
-  <!-- Fonts: Classic serif vibe (per preference 1A) -->
+  <!-- Fonts: Classic serif vibe -->
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;700&amp;family=Crimson+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet" />
-  <!-- MathJax (per preference 2A) -->
+  <!-- MathJax with equation numbering and cross-refs -->
   <script>
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$','$$'], ['\\[','\\]']],
-        processEscapes: true
+        processEscapes: true,
+        tags: 'all',                 // number all displayed equations
+        tagSide: 'right',
+        tagIndent: '0em',
+        packages: { '[+]': ['ams','tagformat'] }
       },
-      chtml: { scale: 1.05 },
-      options: { renderActions: { addMenu: [] } }
+      options: { renderActions: { addMenu: [] } },
+      chtml: { scale: 1.05 }
     };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
@@ -29,8 +33,17 @@
       --border: #e5e7eb; /* gray-200 */
       --paper: #fafafa;
       --radius: 14px;
-      --rhythm: 1.05; /* typographic scale tweak */
     }
+    [data-theme="dark"] {
+      --bg: #0b0b12;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #8f7aff; /* same family, slightly brighter in dark */
+      --accent-2: #b7a8ff;
+      --border: #1f2937;
+      --paper: #0f1020;
+    }
+
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -41,9 +54,10 @@
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      transition: background-color .3s ease, color .3s ease;
     }
 
-    /* Layout: left sticky ToC + main content (you chose “my wise” for structure) */
+    /* Layout */
     .page {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -51,6 +65,7 @@
       max-width: 1200px;
       padding: 32px 20px 80px;
       margin: 0 auto;
+      transition: color .3s ease, background-color .3s ease;
     }
     @media (max-width: 1024px) {
       .page { grid-template-columns: 1fr; }
@@ -67,12 +82,13 @@
       border-radius: var(--radius);
       box-shadow: 0 6px 20px rgba(0,0,0,0.06);
       padding: 14px 14px 10px 14px;
+      transition: background-color .3s ease, border-color .3s ease, color .3s ease;
     }
-    .toc .brand {
-      display: flex; align-items: center; gap: 10px;
-      font-family: 'Instrument Serif', serif; color: var(--accent); font-weight: 700;
-      margin: 2px 4px 10px; font-size: 1.08rem;
-    }
+    [data-theme="dark"] aside.toc { background: rgba(15,16,32,0.6); box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+
+    .toc .toprow { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .toc .brand { font-family: 'Instrument Serif', serif; color: var(--accent); font-weight: 700; font-size: 1.08rem; }
+
     .toc nav a {
       display: block;
       padding: 8px 10px;
@@ -80,18 +96,18 @@
       text-decoration: none;
       border-radius: 10px;
       font-family: 'Instrument Serif', serif;
-      transition: background 0.2s ease, transform 0.2s ease;
+      transition: background .2s ease, transform .2s ease;
     }
     .toc nav a:hover { background: #f3f4ff; transform: translateX(2px); }
+    [data-theme="dark"] .toc nav a:hover { background: rgba(115,83,255,0.12); }
+    .toc nav a.active { background: rgba(115,83,255,0.12); font-weight: 700; }
 
+    .toc .toggle-btn {
+      display: none; cursor: pointer; padding: 6px 10px; border-radius: 10px;
+      background: #f7f7ff; border: 1px solid var(--border);
+    }
     @media (max-width: 1024px) {
-      aside.toc { position: relative; top: unset; }
-      .toc-toggle {
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 6px 10px; border-radius: 10px; cursor: pointer;
-        background: #f7f7ff; border: 1px solid var(--border);
-        margin: 2px 2px 8px;
-      }
+      .toc .toggle-btn { display: inline-flex; align-items: center; gap: 8px; }
       .toc nav { display: none; }
       .toc nav.open { display: block; }
     }
@@ -102,14 +118,16 @@
       border-radius: var(--radius);
       padding: 34px 28px;
       box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+      transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
     }
+    [data-theme="dark"] main.content { box-shadow: 0 12px 32px rgba(0,0,0,0.45); }
 
     /* Headings */
-    h1, h2, h3, h4 { font-family: 'Instrument Serif', serif; color: var(--accent); }
+    h1, h2, h3, h4 { font-family: 'Instrument Serif', serif; color: var(--accent); transition: color .3s ease; }
     h1 { font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.15; margin: 0 0 10px; }
     .subtitle { color: var(--muted); margin: 0 0 18px; font-size: 1.05rem; }
 
-    h2 { margin-top: 42px; margin-bottom: 8px; font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
+    h2 { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 42px; margin-bottom: 8px; font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
     h3 { margin-top: 26px; margin-bottom: 6px; font-size: clamp(1.15rem, 1.7vw, 1.35rem); }
     h4 { margin-top: 16px; margin-bottom: 6px; font-size: 1.05rem; }
 
@@ -120,16 +138,12 @@
     ul { padding-left: 1.05rem; }
     li { margin: 6px 0; }
 
-    .callout {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin: 14px 0;
-    }
+    .callout { background: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 14px 16px; margin: 14px 0; transition: background-color .3s ease, border-color .3s ease; }
+    [data-theme="dark"] .callout { background: rgba(255,255,255,0.03); }
+
     .callout .title { font-weight: 700; color: var(--accent); margin-bottom: 6px; }
-    .example { background: #f8fafc; border: 1px dashed var(--border); border-radius: 10px; padding: 10px 12px; margin: 8px 0; }
+    .example { background: #f8fafc; border: 1px dashed var(--border); border-radius: 10px; padding: 10px 12px; margin: 8px 0; transition: background-color .3s ease, border-color .3s ease; }
+    [data-theme="dark"] .example { background: rgba(255,255,255,0.04); }
 
     /* MathJax container rhythm */
     mjx-container[jax="CHTML"][display="true"] { margin: 14px 0 !important; }
@@ -143,25 +157,35 @@
 
     footer { text-align: center; color: var(--muted); font-size: 0.95rem; padding: 22px 10px; margin-top: 30px; border-top: 1px solid var(--border); }
 
-    /* Floating Listen button (kept) */
-    .listen-btn {
-      position: fixed; top: 18px; right: 18px; width: 50px; height: 50px;
+    /* Floating buttons */
+    .listen-btn, .theme-toggle {
+      position: fixed; top: 18px; width: 50px; height: 50px;
       display: flex; align-items: center; justify-content: center;
       background: rgba(255,255,255,0.6);
       border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      cursor: pointer; transition: transform .22s ease; z-index: 50;
+      cursor: pointer; transition: transform .22s ease, background-color .3s ease; z-index: 50;
     }
-    .listen-btn:hover { transform: translateY(-3px); }
-    .listen-btn svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 2; }
+    .listen-btn:hover, .theme-toggle:hover { transform: translateY(-3px); }
+    .listen-btn { right: 18px; }
+    .theme-toggle { right: 78px; }
+    .listen-btn svg, .theme-toggle svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 2; }
+
+    /* Section collapsible */
+    .sec-toggle { background: transparent; border: 1px solid var(--border); color: var(--accent); border-radius: 10px; padding: 4px 8px; font-family: 'Instrument Serif', serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .sec-toggle:hover { background: rgba(115,83,255,0.08); }
+    .section-body { transition: opacity .2s ease; }
+    section.collapsed .section-body { display: none; }
   </style>
 </head>
 <body>
   <div class="page">
     <aside class="toc" aria-label="Table of contents">
-      <div class="toc-toggle" id="tocToggle" aria-controls="tocNav" aria-expanded="false">
+      <div class="toprow">
         <div class="brand">Interoch Theory</div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        <button class="toggle-btn" id="tocToggle" aria-controls="tocNav" aria-expanded="false" title="Toggle contents">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
       </div>
       <nav id="tocNav">
         <a href="#intro">Introduction</a>
@@ -181,146 +205,178 @@
         <p class="subtitle">Exploring integer sets closed under digit-wise operations and their algebraic, recursive and combinatorial properties.</p>
       </header>
 
-      <section aria-labelledby="definitions">
+      <section aria-labelledby="definitions" id="sec-definitions">
         <div class="section-label">1 · Foundations</div>
-        <h2 id="definitions">Foundational Definitions</h2>
-        <p>Let <span class="keyword">d(n)</span> denote the digits of <em>n</em>. An Interoch set <em>S</em> with operation <em>\(\circ\)</em> satisfies the closure condition</p>
-        <p>\[\forall n \in S,\ \circ\big(d(n)\big)\ \in\ S.\]</p>
-        <h3>1.1 Closure (\(\circ\))</h3>
-        <p>The operation \(\circ\) ensures no <span class="keyword">escape</span> from the set \(S\).</p>
+        <h2 id="definitions">
+          Foundational Definitions
+          <button class="sec-toggle" data-target="sec-definitions" aria-expanded="true" title="Collapse section">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            Collapse
+          </button>
+        </h2>
+        <div class="section-body">
+          <p>Let <span class="keyword">d(n)</span> denote the digits of <em>n</em>. An Interoch set <em>S</em> with operation <em>\(\circ\)</em> satisfies the closure condition in Eq. \(\eqref{eq:closure}\).</p>
+          <p>\[\label{eq:closure} \forall n \in S,\ \circ\big(d(n)\big)\ \in\ S.\]</p>
+          <h3>1.1 Closure (\(\circ\))</h3>
+          <p>The operation \(\circ\) ensures no <span class="keyword">escape</span> from the set \(S\).</p>
+        </div>
       </section>
 
-      <section aria-labelledby="types">
+      <section aria-labelledby="types" id="sec-types">
         <div class="section-label">2 · Types</div>
-        <h2 id="types">Core Interoch Sets</h2>
-        <ul>
-          <li>
-            <strong class="keyword">Addinteroch</strong> — Sum of digits.
-            <div class="example">Example: \(58 \to 5+8=13\).</div>
-          </li>
-          <li>
-            <strong class="keyword">Subinteroch</strong> — Absolute difference of digits.
-            <div class="example">Example: \(94 \to \lvert 9-4\rvert = 5\).</div>
-          </li>
-          <li>
-            <strong class="keyword">Neutinteroch</strong> — Mix of addition and subtraction.
-            <div class="example">Example: \(47 \to (4+7) - \lvert 4-7\rvert = 11 - 3 = 8\).</div>
-          </li>
-          <li>
-            <strong class="keyword">Mulinteroch</strong> — Product of digits (order sensitive).
-            <div class="example">Example: \(81 \to 8\times1=8\).</div>
-          </li>
-          <li>
-            <strong class="keyword">Divinteroch</strong> — Closed under digit division.
-            <div class="example">Example: \(81 \to 8/1=8\).</div>
-          </li>
-        </ul>
+        <h2 id="types">
+          Core Interoch Sets
+          <button class="sec-toggle" data-target="sec-types" aria-expanded="true" title="Collapse section">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            Collapse
+          </button>
+        </h2>
+        <div class="section-body">
+          <ul>
+            <li>
+              <strong class="keyword">Addinteroch</strong> — Sum of digits.
+              <div class="example">Example: \(58 \to 5+8=13\).</div>
+            </li>
+            <li>
+              <strong class="keyword">Subinteroch</strong> — Absolute difference of digits.
+              <div class="example">Example: \(94 \to \lvert 9-4\rvert = 5\).</div>
+            </li>
+            <li>
+              <strong class="keyword">Neutinteroch</strong> — Mix of addition and subtraction.
+              <div class="example">Example: \(47 \to (4+7) - \lvert 4-7\rvert = 11 - 3 = 8\).</div>
+            </li>
+            <li>
+              <strong class="keyword">Mulinteroch</strong> — Product of digits (order sensitive).
+              <div class="example">Example: \(81 \to 8\times1=8\).</div>
+            </li>
+            <li>
+              <strong class="keyword">Divinteroch</strong> — Closed under digit division.
+              <div class="example">Example: \(81 \to 8/1=8\).</div>
+            </li>
+          </ul>
+        </div>
       </section>
 
-      <section aria-labelledby="theorems">
+      <section aria-labelledby="theorems" id="sec-theorems">
         <div class="section-label">3 · Axioms &amp; Properties</div>
-        <h2 id="theorems">Axiom, Theorems and Properties</h2>
-
-        <h3>3.1 Axioms</h3>
-        <div class="callout">
-          <div class="title">Axiom 1 (Closure Under Digit Operations)</div>
-          <p>For any Interoch set \(S\) and operation \(\circ\),</p>
-          <p>\[\forall n \in S,\ \circ\big(d(n)\big)\in S,\]</p>
-          <p>where \(d(n)\) extracts the digits of \(n\), and \(\circ\) is a well-defined digit-wise operation (e.g., sum, product, shift).</p>
-          <div class="example">
-            <em>Corollaries</em>:
-            <ul>
-              <li>If \(\circ\) is deterministic (e.g., digit sum), \(S\) is uniquely closed.</li>
-              <li>If \(\circ\) is non-deterministic (e.g., signed digit difference), \(S\) must contain all possible outputs.</li>
-            </ul>
+        <h2 id="theorems">
+          Axiom, Theorems and Properties
+          <button class="sec-toggle" data-target="sec-theorems" aria-expanded="true" title="Collapse section">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            Collapse
+          </button>
+        </h2>
+        <div class="section-body">
+          <h3>3.1 Axioms</h3>
+          <div class="callout">
+            <div class="title">Axiom 1 (Closure Under Digit Operations)</div>
+            <p>For any Interoch set \(S\) and operation \(\circ\), see Eq. \(\eqref{eq:closure}\).</p>
+            <div class="example">
+              <em>Corollaries</em>:
+              <ul>
+                <li>If \(\circ\) is deterministic (e.g., digit sum), \(S\) is uniquely closed.</li>
+                <li>If \(\circ\) is non-deterministic (e.g., signed digit difference), \(S\) must contain all possible outputs.</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <div class="callout">
-          <div class="title">Axiom 2 (Minimality Condition)</div>
-          <ol>
-            <li>\(S\) is closed under \(\circ\).</li>
-            <li>No proper subset of \(S\) satisfies (1).</li>
-          </ol>
-          <div class="example">
-            Examples: \(\{6, 60\}\) is minimal for Addinteroch. \(\{0\}\) is trivial-minimal for Subinteroch.
+          <div class="callout">
+            <div class="title">Axiom 2 (Minimality Condition)</div>
+            <ol>
+              <li>\(S\) is closed under \(\circ\).</li>
+              <li>No proper subset of \(S\) satisfies (1).</li>
+            </ol>
+            <div class="example">Examples: \(\{6, 60\}\) is minimal for Addinteroch. \(\{0\}\) is trivial-minimal for Subinteroch.</div>
           </div>
+
+          <div class="callout">
+            <div class="title">Axiom 3 (Operation-Independent Invariance)</div>
+            <p>An Interoch set \(S\) may satisfy multiple operations simultaneously (e.g., additive and multiplicative closure).</p>
+            <div class="example">Example: \(\{1\}\) is closed under digit sum (\(1\to1\)) and digit product (\(1\to1\)).</div>
+          </div>
+
+          <h4>Structural Principles</h4>
+          <div class="callout">
+            <div class="title">Principle of Non-Triviality</div>
+            <p>A non-trivial Interoch set must contain at least two numbers linked dynamically (e.g., \(38 \to 6\)).</p>
+          </div>
+          <div class="callout">
+            <div class="title">Principle of Maximality</div>
+            <p>A maximal Interoch set cannot be extended without violating closure.</p>
+          </div>
+
+          <h3>3.2 Minimal and Maximal Sets</h3>
+          <p><span class="keyword">Minimal</span>: Smallest non-trivial closed set.</p>
+          <div class="example">Example: \(\{6,60\}\) is minimal for Addinteroch.</div>
+          <p><span class="keyword">Maximal</span>: Largest possible closed set (often infinite).</p>
+          <div class="example">Example: All numbers divisible by 9 for Addinteroch.</div>
+
+          <h3>3.3 Theorem</h3>
+          <p>Any Addinteroch set must share a digital root (mod 9); equivalently, Eq. \(\eqref{eq:mod9}\) holds.</p>
+          \[ \label{eq:mod9} n \equiv s_9(n) \pmod{9}. \]
+
+          <h3>3.4 Fixed Points and Invariance</h3>
+          <ul>
+            <li>Single-digit numbers are fixed points for many operations.</li>
+            <li><span class="keyword">Non-trivial invariance</span>: \(\{145\}\) for factorial digit sum \((1! + 4! + 5! = 145)\).</li>
+          </ul>
         </div>
-
-        <div class="callout">
-          <div class="title">Axiom 3 (Operation-Independent Invariance)</div>
-          <p>An Interoch set \(S\) may satisfy multiple operations simultaneously (e.g., additive and multiplicative closure).</p>
-          <div class="example">Example: \(\{1\}\) is closed under digit sum (\(1\to1\)) and digit product (\(1\to1\)).</div>
-        </div>
-
-        <h4>Structural Principles</h4>
-        <div class="callout">
-          <div class="title">Principle of Non-Triviality</div>
-          <p>A non-trivial Interoch set must contain at least two numbers linked dynamically (e.g., \(38 \to 6\)).</p>
-        </div>
-        <div class="callout">
-          <div class="title">Principle of Maximality</div>
-          <p>A maximal Interoch set cannot be extended without violating closure.</p>
-        </div>
-
-        <h3>3.2 Minimal and Maximal Sets</h3>
-        <p><span class="keyword">Minimal</span>: Smallest non-trivial closed set.</p>
-        <div class="example">Example: \(\{6,60\}\) is minimal for Addinteroch.</div>
-        <p><span class="keyword">Maximal</span>: Largest possible closed set (often infinite).</p>
-        <div class="example">Example: All numbers divisible by 9 for Addinteroch.</div>
-
-        <h3>3.3 Theorem</h3>
-        <p>Any Addinteroch set must share a digital root (mod 9).</p>
-        <div class="example">Proof sketch: Digit sums preserve modulo 9.</div>
-
-        <h3>3.4 Fixed Points and Invariance</h3>
-        <ul>
-          <li>Single-digit numbers are fixed points for many operations.</li>
-          <li><span class="keyword">Non-trivial invariance</span>: \(\{145\}\) for factorial digit sum \((1! + 4! + 5! = 145)\).</li>
-        </ul>
       </section>
 
-      <section aria-labelledby="advanced">
+      <section aria-labelledby="advanced" id="sec-advanced">
         <div class="section-label">4 · Advanced Constructs</div>
-        <h2 id="advanced">Advanced Constructs</h2>
+        <h2 id="advanced">
+          Advanced Constructs
+          <button class="sec-toggle" data-target="sec-advanced" aria-expanded="true" title="Collapse section">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            Collapse
+          </button>
+        </h2>
+        <div class="section-body">
+          <h3>4.1 Positional Interochs</h3>
+          <ul>
+            <li><span class="keyword">Swappinteroch</span> — Closed under digit swaps. <span class="example">Example: \(\{13,31\}\).</span></li>
+            <li><span class="keyword">Splitinteroch</span> — Operate on grouped digits. <span class="example">Example: \(123 \to 1 + 23 = 24\).</span></li>
+          </ul>
 
-        <h3>4.1 Positional Interochs</h3>
-        <ul>
-          <li><span class="keyword">Swappinteroch</span> — Closed under digit swaps. <span class="example">Example: \(\{13,31\}\).</span></li>
-          <li><span class="keyword">Splitinteroch</span> — Operate on grouped digits. <span class="example">Example: \(123 \to 1 + 23 = 24\).</span></li>
-        </ul>
+          <h3>4.2 Recursive Interochs</h3>
+          <ul>
+            <li><span class="keyword">Fractalinteroch</span> — Recursive digit sums. <span class="example">Example: \(987 \to 24 \to 6\).</span></li>
+            <li><span class="keyword">Loopinteroch</span> — Numbers that cycle back. <span class="example">Example: \(08 \to 0 + 8 = 8\).</span></li>
+          </ul>
 
-        <h3>4.2 Recursive Interochs</h3>
-        <ul>
-          <li><span class="keyword">Fractalinteroch</span> — Recursive digit sums. <span class="example">Example: \(987 \to 24 \to 6\).</span></li>
-          <li><span class="keyword">Loopinteroch</span> — Numbers that cycle back. <span class="example">Example: \(08 \to 0 + 8 = 8\).</span></li>
-        </ul>
+          <h3>4.3 Compositional Interochs</h3>
+          <ul>
+            <li><span class="keyword">Multiinteroch</span> — Chains of operations. <span class="example">Example: \(14 \to 1+4=5;\ 5\times2=10\).</span></li>
+            <li><span class="keyword">Groupinteroch</span> — Segment then operate. <span class="example">Example: \(1242 \to 12+42=54\).</span></li>
+          </ul>
 
-        <h3>4.3 Compositional Interochs</h3>
-        <ul>
-          <li><span class="keyword">Multiinteroch</span> — Chains of operations. <span class="example">Example: \(14 \to 1+4=5;\ 5\times2=10\).</span></li>
-          <li><span class="keyword">Groupinteroch</span> — Segment then operate. <span class="example">Example: \(1242 \to 12+42=54\).</span></li>
-        </ul>
-
-        <h3>4.4 Transformational Interochs</h3>
-        <ul>
-          <li><span class="keyword">Codeinteroch</span> — Digit shifts. <span class="example">Example: +2 to each digit in \(123 \to 345\).</span></li>
-        </ul>
+          <h3>4.4 Transformational Interochs</h3>
+          <ul>
+            <li><span class="keyword">Codeinteroch</span> — Digit shifts. <span class="example">Example: +2 to each digit in \(123 \to 345\).</span></li>
+          </ul>
+        </div>
       </section>
 
-      <section aria-labelledby="applications">
+      <section aria-labelledby="applications" id="sec-applications">
         <div class="section-label">5 · Applications</div>
-        <h2 id="applications">Applications</h2>
+        <h2 id="applications">
+          Applications
+          <button class="sec-toggle" data-target="sec-applications" aria-expanded="true" title="Collapse section">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            Collapse
+          </button>
+        </h2>
+        <div class="section-body">
+          <h3>5.1 Recreational Mathematics</h3>
+          <ul>
+            <li><span class="keyword">Puzzle Design</span>: Create interoch-based riddles.</li>
+            <li><span class="keyword">Game Mechanics</span>: Board games where moves follow Codeinteroch.</li>
+          </ul>
 
-        <h3>5.1 Recreational Mathematics</h3>
-        <ul>
-          <li><span class="keyword">Puzzle Design</span>: Create interoch-based riddles.</li>
-          <li><span class="keyword">Game Mechanics</span>: Board games where moves follow Codeinteroch.</li>
-        </ul>
-
-        <h3>5.2 Computational Exploration</h3>
-        <p><span class="keyword">Algorithm</span>: In Python:</p>
-        <pre><code>def interoch_closure(seed, operation):
+          <h3>5.2 Computational Exploration</h3>
+          <p><span class="keyword">Algorithm</span>: In Python:</p>
+          <pre><code>def interoch_closure(seed, operation):
     S = set(seed)
     while True:
         new = {operation(n) for n in S}
@@ -330,34 +386,51 @@
     return S
 </code></pre>
 
-        <h3>5.3 Cryptographic Potential</h3>
-        <p><span class="keyword">Digit-Operation Keys</span>: Use interoch properties for hashing or encoding.</p>
+          <h3>5.3 Cryptographic Potential</h3>
+          <p><span class="keyword">Digit-Operation Keys</span>: Use interoch properties for hashing or encoding.</p>
+        </div>
       </section>
 
-      <section aria-labelledby="future">
+      <section aria-labelledby="future" id="sec-future">
         <div class="section-label">6 · Future Directions</div>
-        <h2 id="future">Future Directions</h2>
-        <ul>
-          <li><span class="keyword">Algebraic structures</span>: Study of Interoch sets as monoids or semigroups.</li>
-          <li><span class="keyword">Graph Theory</span>: Model numbers as nodes, operations as edges.</li>
-          <li><span class="keyword">Cross-Disciplinary Links</span>: Connect to automata theory or dynamical systems.</li>
-        </ul>
+        <h2 id="future">
+          Future Directions
+          <button class="sec-toggle" data-target="sec-future" aria-expanded="true" title="Collapse section">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            Collapse
+          </button>
+        </h2>
+        <div class="section-body">
+          <ul>
+            <li><span class="keyword">Algebraic structures</span>: Study of Interoch sets as monoids or semigroups.</li>
+            <li><span class="keyword">Graph Theory</span>: Model numbers as nodes, operations as edges.</li>
+            <li><span class="keyword">Cross-Disciplinary Links</span>: Connect to automata theory or dynamical systems.</li>
+          </ul>
+        </div>
       </section>
 
-      <section aria-labelledby="research">
+      <section aria-labelledby="research" id="sec-research">
         <div class="section-label">7 · Notes</div>
-        <h2 id="research">Recent Research</h2>
-        <div class="date">2025-08-10</div>
-        <h3>Fractalinteroch Patterns in Digital Time</h3>
-        <p>Repeated <span class="keyword">digit multiplication</span> in clock times leads to cycles within a <span class="keyword">Fractalinteroch</span> structure.</p>
-        <p>\[123 \to 1\times2\times3 = 6 \to 6\times(\text{nothing}) = 6\]</p>
+        <h2 id="research">
+          Recent Research
+          <button class="sec-toggle" data-target="sec-research" aria-expanded="true" title="Collapse section">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            Collapse
+          </button>
+        </h2>
+        <div class="section-body">
+          <div class="date">2025-08-10</div>
+          <h3>Fractalinteroch Patterns in Digital Time</h3>
+          <p>Repeated <span class="keyword">digit multiplication</span> in clock times leads to cycles within a <span class="keyword">Fractalinteroch</span> structure.</p>
+          <p>\[123 \to 1\times2\times3 = 6 \to 6\times(\text{nothing}) = 6\]</p>
+        </div>
       </section>
 
       <footer>Research by Enoch (2024 – Present)</footer>
     </main>
   </div>
 
-  <!-- Listen button preserved -->
+  <!-- Listen button -->
   <div class="listen-btn" id="listenBtn" title="Read Aloud">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M3 10v4h4l5 5V5L7 10H3z"></path>
@@ -365,6 +438,13 @@
       <path d="M19.07 4.93a9.969 9.969 0 0 1 0 14.14" fill="none" stroke="#7353ff"></path>
     </svg>
   </div>
+
+  <!-- Dark mode toggle -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-pressed="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
 
   <script>
     // Mobile ToC toggle
@@ -377,9 +457,7 @@
       });
     }
 
-    // Smooth offset for in-page anchors is handled via CSS scroll-margin-top.
-
-    // Read Aloud (kept)
+    // Read Aloud
     const listenBtn = document.getElementById('listenBtn');
     let isReading = false; let utterance;
     listenBtn.addEventListener('click', () => {
@@ -396,6 +474,58 @@
         speechSynthesis.cancel();
         isReading = false;
       }
+    });
+
+    // Dark mode toggle with preference persistence and OS default
+    const rootEl = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const storedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (storedTheme) {
+      rootEl.setAttribute('data-theme', storedTheme);
+      themeToggle.setAttribute('aria-pressed', storedTheme === 'dark');
+    } else if (prefersDark) {
+      rootEl.setAttribute('data-theme', 'dark');
+      themeToggle.setAttribute('aria-pressed', 'true');
+    }
+    themeToggle.addEventListener('click', () => {
+      const current = rootEl.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      rootEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeToggle.setAttribute('aria-pressed', next === 'dark');
+    });
+
+    // Smart ToC highlighting on scroll
+    const tocLinks = Array.from(document.querySelectorAll('.toc nav a'));
+    const headings = tocLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const linkById = new Map(tocLinks.map(a => [a.getAttribute('href').slice(1), a]));
+
+    const setActive = (id) => {
+      tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    }, { rootMargin: '0px 0px -70% 0px', threshold: 0.1 });
+
+    headings.forEach(h => observer.observe(h));
+
+    // Section collapsibles
+    document.querySelectorAll('.sec-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const sec = document.getElementById(targetId);
+        const isCollapsed = sec.classList.toggle('collapsed');
+        btn.setAttribute('aria-expanded', !isCollapsed);
+        // rotate icon
+        const svg = btn.querySelector('svg');
+        if (svg) svg.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
     });
   </script>
 </body>
