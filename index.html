@@ -22,7 +22,6 @@
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   <style>
-    /* Ensure any legacy navbar is fully hidden if present */
     #navbar { display: none !important; }
 
     :root {
@@ -62,7 +61,6 @@
       transition: background-color .3s ease, color .3s ease;
     }
 
-    /* Mobile top bar */
     .mobile-bar { position: sticky; top: 0; z-index: 60; display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; background: var(--bg); border-bottom: 1px solid var(--border); }
     .mobile-brand { font-family: 'Instrument Serif', serif; color: var(--accent); font-weight: 700; }
     .mobile-actions { display: flex; gap: 8px; align-items: center; }
@@ -70,7 +68,6 @@
     .icon-btn:hover { background: var(--btn-bg-hover); }
     .icon-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-    /* Layout */
     .page { display: grid; grid-template-columns: 280px 1fr; gap: 28px; max-width: 1200px; padding: 32px 20px 80px; margin: 0 auto; transition: color .3s ease, background-color .3s ease; }
     @media (max-width: 1024px) { .page { grid-template-columns: 1fr; padding-top: 16px; } }
 
@@ -119,7 +116,6 @@
 
     footer { text-align: center; color: var(--muted); font-size: 0.95rem; padding: 22px 10px; margin-top: 30px; border-top: 1px solid var(--border); }
 
-    /* Floating buttons (desktop only) */
     .listen-btn, .theme-toggle { position: fixed; top: 18px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); cursor: pointer; transition: transform .22s ease, background-color .3s ease; z-index: 50; color: var(--accent); border: 1px solid var(--border); }
     .listen-btn:hover, .theme-toggle:hover { background: var(--btn-bg-hover); transform: translateY(-3px); }
     .listen-btn { right: 18px; }
@@ -135,7 +131,6 @@
   </style>
 </head>
 <body>
-  <!-- Mobile top navbar (visible on <= 1024px) -->
   <div class="mobile-bar" id="mobileBar">
     <div class="mobile-brand">Interoch Theory</div>
     <div class="mobile-actions">
@@ -181,7 +176,7 @@
         <div class="section-label">1 · Foundations</div>
         <h2 id="definitions">
           Foundational Definitions
-          <button class="sec-toggle" data-target="sec-definitions" aria-expanded="true" title="Collapse section">
+          <button class="sec-toggle" data-target="sec-definitions" aria-expanded="true" title="Collapse section"> 
             <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             Collapse
           </button>
@@ -338,24 +333,6 @@
         </div>
       </section>
 
-      <section aria-labelledby="future" id="sec-future">
-        <div class="section-label">6 · Future Directions</div>
-        <h2 id="future">
-          Future Directions
-          <button class="sec-toggle" data-target="sec-future" aria-expanded="true" title="Collapse section">
-            <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            Collapse
-          </button>
-        </h2>
-        <div class="section-body">
-          <ul>
-            <li><span class="keyword">Algebraic structures</span>: Study of Interoch sets as monoids or semigroups.</li>
-            <li><span class="keyword">Graph Theory</span>: Model numbers as nodes, operations as edges.</li>
-            <li><span class="keyword">Cross-Disciplinary Links</span>: Connect to automata theory or dynamical systems.</li>
-          </ul>
-        </div>
-      </section>
-
       <section aria-labelledby="research" id="sec-research">
         <div class="section-label">7 · Notes</div>
         <h2 id="research">
@@ -436,11 +413,36 @@
     const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); }); }, { rootMargin: '0px 0px -60% 0px', threshold: 0.2 });
     headings.forEach(h => observer.observe(h));
 
-    // Immediate highlight on click, including the final section
     tocLinks.forEach(a => a.addEventListener('click', (e) => { setActive(e.currentTarget.getAttribute('href').slice(1)); }));
-    // Bottom-of-page fallback ensures last item highlights
-    window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) setActive('research');
+    window.addEventListener('scroll', () => { if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) setActive('research'); });
+
+    // Collapsibles — robust delegated handler + aria-controls init
+    document.querySelectorAll('.sec-toggle').forEach(btn => {
+      const targetId = btn.getAttribute('data-target');
+      if (targetId) btn.setAttribute('aria-controls', targetId);
+    });
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.sec-toggle');
+      if (!btn) return;
+      const targetId = btn.getAttribute('data-target');
+      const sec = (targetId && document.getElementById(targetId)) || btn.closest('section');
+      if (!sec) return;
+      const body = sec.querySelector('.section-body');
+      const isCollapsed = sec.classList.toggle('collapsed');
+      if (body) body.style.opacity = isCollapsed ? '0' : '1';
+      btn.setAttribute('aria-expanded', String(!isCollapsed));
+      const svg = btn.querySelector('svg');
+      if (svg) svg.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+      // toggle label text
+      try {
+        const txt = isCollapsed ? ' Expand' : ' Collapse';
+        const tn = document.createTextNode(txt);
+        // Ensure last child is text node after svg
+        if (btn.childNodes.length > 0) {
+          if (btn.lastChild.nodeType === Node.TEXT_NODE) btn.lastChild.nodeValue = txt; else btn.appendChild(tn);
+        } else { btn.appendChild(tn); }
+      } catch(_){}
     });
 
     document.addEventListener('DOMContentLoaded', () => { if (window.innerWidth <= 1024) document.getElementById('mobileBar').style.display = 'flex'; });
