@@ -13,7 +13,7 @@
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$','$$'], ['\\[','\\]']],
         processEscapes: true,
-        tags: 'all',                 // number all displayed equations
+        tags: 'all',
         tagSide: 'right',
         tagIndent: '0em',
         packages: { '[+]': ['ams','tagformat'] }
@@ -38,7 +38,7 @@
       --bg: #0b0b12;
       --text: #e5e7eb;
       --muted: #9ca3af;
-      --accent: #8f7aff; /* same family, slightly brighter in dark */
+      --accent: #8f7aff;
       --accent-2: #b7a8ff;
       --border: #1f2937;
       --paper: #0f1020;
@@ -57,31 +57,26 @@
       transition: background-color .3s ease, color .3s ease;
     }
 
+    /* Mobile top bar */
+    .mobile-bar {
+      position: sticky; top: 0; z-index: 60;
+      display: none; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 14px; background: var(--bg); border-bottom: 1px solid var(--border);
+    }
+    .mobile-brand { font-family: 'Instrument Serif', serif; color: var(--accent); font-weight: 700; }
+    .mobile-actions { display: flex; gap: 8px; align-items: center; }
+    .icon-btn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.6); cursor: pointer; }
+    .icon-btn:hover { background: rgba(115,83,255,0.08); }
+    .icon-btn svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; }
+
     /* Layout */
-    .page {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 28px;
-      max-width: 1200px;
-      padding: 32px 20px 80px;
-      margin: 0 auto;
-      transition: color .3s ease, background-color .3s ease;
-    }
-    @media (max-width: 1024px) {
-      .page { grid-template-columns: 1fr; }
-    }
+    .page { display: grid; grid-template-columns: 280px 1fr; gap: 28px; max-width: 1200px; padding: 32px 20px 80px; margin: 0 auto; transition: color .3s ease, background-color .3s ease; }
+    @media (max-width: 1024px) { .page { grid-template-columns: 1fr; padding-top: 16px; } }
 
     aside.toc {
-      position: sticky;
-      top: 20px;
-      align-self: start;
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      padding: 14px 14px 10px 14px;
+      position: sticky; top: 20px; align-self: start; background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: 0 6px 20px rgba(0,0,0,0.06); padding: 14px 14px 10px 14px;
       transition: background-color .3s ease, border-color .3s ease, color .3s ease;
     }
     [data-theme="dark"] aside.toc { background: rgba(15,16,32,0.6); box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
@@ -89,37 +84,19 @@
     .toc .toprow { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .toc .brand { font-family: 'Instrument Serif', serif; color: var(--accent); font-weight: 700; font-size: 1.08rem; }
 
-    .toc nav a {
-      display: block;
-      padding: 8px 10px;
-      color: var(--accent);
-      text-decoration: none;
-      border-radius: 10px;
-      font-family: 'Instrument Serif', serif;
-      transition: background .2s ease, transform .2s ease;
-    }
+    .toc nav a { display: block; padding: 8px 10px; color: var(--accent); text-decoration: none; border-radius: 10px; font-family: 'Instrument Serif', serif; transition: background .2s ease, transform .2s ease; }
     .toc nav a:hover { background: #f3f4ff; transform: translateX(2px); }
     [data-theme="dark"] .toc nav a:hover { background: rgba(115,83,255,0.12); }
     .toc nav a.active { background: rgba(115,83,255,0.12); font-weight: 700; }
 
-    .toc .toggle-btn {
-      display: none; cursor: pointer; padding: 6px 10px; border-radius: 10px;
-      background: #f7f7ff; border: 1px solid var(--border);
-    }
+    .toc .toggle-btn { display: none; cursor: pointer; padding: 6px 10px; border-radius: 10px; background: #f7f7ff; border: 1px solid var(--border); }
     @media (max-width: 1024px) {
       .toc .toggle-btn { display: inline-flex; align-items: center; gap: 8px; }
       .toc nav { display: none; }
       .toc nav.open { display: block; }
     }
 
-    main.content {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 34px 28px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.05);
-      transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
-    }
+    main.content { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius); padding: 34px 28px; box-shadow: 0 8px 28px rgba(0,0,0,0.05); transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease; }
     [data-theme="dark"] main.content { box-shadow: 0 12px 32px rgba(0,0,0,0.45); }
 
     /* Headings */
@@ -131,45 +108,38 @@
     h3 { margin-top: 26px; margin-bottom: 6px; font-size: clamp(1.15rem, 1.7vw, 1.35rem); }
     h4 { margin-top: 16px; margin-bottom: 6px; font-size: 1.05rem; }
 
-    /* Section label bar */
     .section-label { color: var(--muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-size: .8rem; margin-top: 36px; margin-bottom: 6px; }
 
-    /* Lists and blocks */
-    ul { padding-left: 1.05rem; }
-    li { margin: 6px 0; }
+    ul { padding-left: 1.05rem; } li { margin: 6px 0; }
 
     .callout { background: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 14px 16px; margin: 14px 0; transition: background-color .3s ease, border-color .3s ease; }
     [data-theme="dark"] .callout { background: rgba(255,255,255,0.03); }
-
     .callout .title { font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+
     .example { background: #f8fafc; border: 1px dashed var(--border); border-radius: 10px; padding: 10px 12px; margin: 8px 0; transition: background-color .3s ease, border-color .3s ease; }
     [data-theme="dark"] .example { background: rgba(255,255,255,0.04); }
 
-    /* MathJax container rhythm */
+    /* MathJax rhythm */
     mjx-container[jax="CHTML"][display="true"] { margin: 14px 0 !important; }
 
-    /* Inline accents */
     .keyword { color: var(--accent-2); font-weight: 600; }
     .date { color: var(--muted); font-style: italic; font-size: 0.95rem; }
 
-    /* Anchor offset */
     h2, h3, h4 { scroll-margin-top: 80px; }
 
     footer { text-align: center; color: var(--muted); font-size: 0.95rem; padding: 22px 10px; margin-top: 30px; border-top: 1px solid var(--border); }
 
-    /* Floating buttons */
-    .listen-btn, .theme-toggle {
-      position: fixed; top: 18px; width: 50px; height: 50px;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.6);
-      border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      cursor: pointer; transition: transform .22s ease, background-color .3s ease; z-index: 50;
-    }
+    /* Floating buttons (desktop only) */
+    .listen-btn, .theme-toggle { position: fixed; top: 18px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.6); border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); cursor: pointer; transition: transform .22s ease, background-color .3s ease; z-index: 50; }
     .listen-btn:hover, .theme-toggle:hover { transform: translateY(-3px); }
     .listen-btn { right: 18px; }
     .theme-toggle { right: 78px; }
     .listen-btn svg, .theme-toggle svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 2; }
+
+    @media (max-width: 1024px) {
+      .mobile-bar { display: flex; }
+      .listen-btn, .theme-toggle { display: none; } /* move into navbar on mobile */
+    }
 
     /* Section collapsible */
     .sec-toggle { background: transparent; border: 1px solid var(--border); color: var(--accent); border-radius: 10px; padding: 4px 8px; font-family: 'Instrument Serif', serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
@@ -179,6 +149,22 @@
   </style>
 </head>
 <body>
+  <!-- Mobile top navbar (visible on <= 1024px) -->
+  <div class="mobile-bar" id="mobileBar">
+    <div class="mobile-brand">Interoch Theory</div>
+    <div class="mobile-actions">
+      <button class="icon-btn" id="tocToggleTop" aria-controls="tocNav" aria-expanded="false" title="Toggle contents">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <button class="icon-btn" id="mobileThemeToggle" title="Toggle dark mode" aria-pressed="false">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <button class="icon-btn" id="mobileListenBtn" title="Read Aloud">
+        <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"></path><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"></path><path d="M19.07 4.93a9.969 9.969 0 0 1 0 14.14" fill="none" stroke="#7353ff"></path></svg>
+      </button>
+    </div>
+  </div>
+
   <div class="page">
     <aside class="toc" aria-label="Table of contents">
       <div class="toprow">
@@ -430,7 +416,7 @@
     </main>
   </div>
 
-  <!-- Listen button -->
+  <!-- Desktop floating Listen button -->
   <div class="listen-btn" id="listenBtn" title="Read Aloud">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M3 10v4h4l5 5V5L7 10H3z"></path>
@@ -439,7 +425,7 @@
     </svg>
   </div>
 
-  <!-- Dark mode toggle -->
+  <!-- Desktop floating Dark mode toggle -->
   <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-pressed="false">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -447,25 +433,43 @@
   </button>
 
   <script>
-    // Mobile ToC toggle
-    const tocToggle = document.getElementById('tocToggle');
-    const tocNav = document.getElementById('tocNav');
-    if (tocToggle) {
-      tocToggle.addEventListener('click', () => {
-        const open = tocNav.classList.toggle('open');
-        tocToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
+    // Utilities: Theme
+    const rootEl = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+    function applyTheme(theme) {
+      rootEl.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const pressed = theme === 'dark';
+      if (themeToggle) themeToggle.setAttribute('aria-pressed', pressed);
+      if (mobileThemeToggle) mobileThemeToggle.setAttribute('aria-pressed', pressed);
     }
+
+    const storedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (storedTheme) applyTheme(storedTheme); else if (prefersDark) applyTheme('dark');
+
+    function toggleTheme() {
+      const current = rootEl.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+    }
+
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+    if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
 
     // Read Aloud
     const listenBtn = document.getElementById('listenBtn');
+    const mobileListenBtn = document.getElementById('mobileListenBtn');
     let isReading = false; let utterance;
-    listenBtn.addEventListener('click', () => {
+
+    function toggleReadAloud() {
       if (!isReading) {
         const textContent = document.querySelector('main.content').innerText;
         utterance = new SpeechSynthesisUtterance(textContent);
         const voices = speechSynthesis.getVoices();
-        const formalVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('serena')) || voices.find(v => v.lang.startsWith('en'));
+        const formalVoice = voices.find(v => v.lang.startsWith('en') && v.name && v.name.toLowerCase().includes('serena')) || voices.find(v => v.lang && v.lang.startsWith('en'));
         if (formalVoice) utterance.voice = formalVoice;
         utterance.rate = 0.95;
         speechSynthesis.speak(utterance);
@@ -474,45 +478,34 @@
         speechSynthesis.cancel();
         isReading = false;
       }
-    });
-
-    // Dark mode toggle with preference persistence and OS default
-    const rootEl = document.documentElement;
-    const themeToggle = document.getElementById('themeToggle');
-    const storedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (storedTheme) {
-      rootEl.setAttribute('data-theme', storedTheme);
-      themeToggle.setAttribute('aria-pressed', storedTheme === 'dark');
-    } else if (prefersDark) {
-      rootEl.setAttribute('data-theme', 'dark');
-      themeToggle.setAttribute('aria-pressed', 'true');
     }
-    themeToggle.addEventListener('click', () => {
-      const current = rootEl.getAttribute('data-theme') || 'light';
-      const next = current === 'light' ? 'dark' : 'light';
-      rootEl.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      themeToggle.setAttribute('aria-pressed', next === 'dark');
-    });
+
+    if (listenBtn) listenBtn.addEventListener('click', toggleReadAloud);
+    if (mobileListenBtn) mobileListenBtn.addEventListener('click', toggleReadAloud);
+
+    // ToC toggles (aside + mobile bar)
+    const tocToggle = document.getElementById('tocToggle');
+    const tocToggleTop = document.getElementById('tocToggleTop');
+    const tocNav = document.getElementById('tocNav');
+
+    function setTocOpen(open) {
+      tocNav.classList.toggle('open', open);
+      if (tocToggle) tocToggle.setAttribute('aria-expanded', open);
+      if (tocToggleTop) tocToggleTop.setAttribute('aria-expanded', open);
+    }
+
+    if (tocToggle) {
+      tocToggle.addEventListener('click', () => setTocOpen(!tocNav.classList.contains('open')));
+    }
+    if (tocToggleTop) {
+      tocToggleTop.addEventListener('click', () => setTocOpen(!tocNav.classList.contains('open')));
+    }
 
     // Smart ToC highlighting on scroll
     const tocLinks = Array.from(document.querySelectorAll('.toc nav a'));
     const headings = tocLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-    const linkById = new Map(tocLinks.map(a => [a.getAttribute('href').slice(1), a]));
-
-    const setActive = (id) => {
-      tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-        }
-      });
-    }, { rootMargin: '0px 0px -70% 0px', threshold: 0.1 });
-
+    const setActive = (id) => { tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id)); };
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); }); }, { rootMargin: '0px 0px -70% 0px', threshold: 0.1 });
     headings.forEach(h => observer.observe(h));
 
     // Section collapsibles
@@ -522,7 +515,6 @@
         const sec = document.getElementById(targetId);
         const isCollapsed = sec.classList.toggle('collapsed');
         btn.setAttribute('aria-expanded', !isCollapsed);
-        // rotate icon
         const svg = btn.querySelector('svg');
         if (svg) svg.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
       });
