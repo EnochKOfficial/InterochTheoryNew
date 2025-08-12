@@ -124,8 +124,9 @@
 
     @media (max-width: 1024px) { .mobile-bar { display: flex; } .listen-btn, .theme-toggle { display: none; } }
 
-    .sec-toggle { background: transparent; border: 1px solid var(--border); color: var(--accent); border-radius: 10px; padding: 4px 8px; font-family: 'Instrument Serif', serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .sec-toggle { background: transparent; border: 1px solid var(--border); color: var(--accent); border-radius: 10px; padding: 4px 8px; font-family: 'Instrument Serif', serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; user-select: none; }
     .sec-toggle:hover { background: rgba(115,83,255,0.08); }
+    .sec-toggle .label { font-family: 'Instrument Serif', serif; }
     .section-body { transition: opacity .2s ease; }
     section.collapsed .section-body { display: none; }
   </style>
@@ -134,13 +135,13 @@
   <div class="mobile-bar" id="mobileBar">
     <div class="mobile-brand">Interoch Theory</div>
     <div class="mobile-actions">
-      <button class="icon-btn" id="tocToggleTop" aria-controls="tocNav" aria-expanded="false" title="Toggle contents">
+      <button class="icon-btn" id="tocToggleTop" aria-controls="tocNav" aria-expanded="false" title="Toggle contents" type="button">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </button>
-      <button class="icon-btn" id="mobileThemeToggle" title="Toggle dark mode" aria-pressed="false">
+      <button class="icon-btn" id="mobileThemeToggle" title="Toggle dark mode" aria-pressed="false" type="button">
         <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
-      <button class="icon-btn" id="mobileListenBtn" title="Read Aloud">
+      <button class="icon-btn" id="mobileListenBtn" title="Read Aloud" type="button">
         <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"></path><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"></path><path d="M19.07 4.93a9.969 9.969 0 0 1 0 14.14"/></svg>
       </button>
     </div>
@@ -150,7 +151,7 @@
     <aside class="toc" aria-label="Table of contents">
       <div class="toprow">
         <div class="brand">Interoch Theory</div>
-        <button class="toggle-btn" id="tocToggle" aria-controls="tocNav" aria-expanded="false" title="Toggle contents">
+        <button class="toggle-btn" id="tocToggle" aria-controls="tocNav" aria-expanded="false" title="Toggle contents" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
       </div>
@@ -176,9 +177,9 @@
         <div class="section-label">1 · Foundations</div>
         <h2 id="definitions">
           Foundational Definitions
-          <button class="sec-toggle" data-target="sec-definitions" aria-expanded="true" title="Collapse section"> 
+          <button class="sec-toggle" data-target="sec-definitions" aria-controls="sec-definitions" aria-expanded="true" title="Collapse section" type="button">
             <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            Collapse
+            <span class="label">Collapse</span>
           </button>
         </h2>
         <div class="section-body">
@@ -193,9 +194,9 @@
         <div class="section-label">2 · Types</div>
         <h2 id="types">
           Core Interoch Sets
-          <button class="sec-toggle" data-target="sec-types" aria-expanded="true" title="Collapse section">
+          <button class="sec-toggle" data-target="sec-types" aria-controls="sec-types" aria-expanded="true" title="Collapse section" type="button">
             <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            Collapse
+            <span class="label">Collapse</span>
           </button>
         </h2>
         <div class="section-body">
@@ -213,9 +214,9 @@
         <div class="section-label">3 · Axioms &amp; Properties</div>
         <h2 id="theorems">
           Axiom, Theorems and Properties
-          <button class="sec-toggle" data-target="sec-theorems" aria-expanded="true" title="Collapse section">
+          <button class="sec-toggle" data-target="sec-theorems" aria-controls="sec-theorems" aria-expanded="true" title="Collapse section" type="button">
             <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            Collapse
+            <span class="label">Collapse</span>
           </button>
         </h2>
         <div class="section-body">
@@ -269,9 +270,9 @@
         <div class="section-label">4 · Advanced Constructs</div>
         <h2 id="advanced">
           Advanced Constructs
-          <button class="sec-toggle" data-target="sec-advanced" aria-expanded="true" title="Collapse section">
+          <button class="sec-toggle" data-target="sec-advanced" aria-controls="sec-advanced" aria-expanded="true" title="Collapse section" type="button">
             <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            Collapse
+            <span class="label">Collapse</span>
           </button>
         </h2>
         <div class="section-body">
@@ -304,9 +305,9 @@
         <div class="section-label">5 · Applications</div>
         <h2 id="applications">
           Applications
-          <button class="sec-toggle" data-target="sec-applications" aria-expanded="true" title="Collapse section">
+          <button class="sec-toggle" data-target="sec-applications" aria-controls="sec-applications" aria-expanded="true" title="Collapse section" type="button">
             <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            Collapse
+            <span class="label">Collapse</span>
           </button>
         </h2>
         <div class="section-body">
@@ -337,9 +338,9 @@
         <div class="section-label">7 · Notes</div>
         <h2 id="research">
           Recent Research
-          <button class="sec-toggle" data-target="sec-research" aria-expanded="true" title="Collapse section">
+          <button class="sec-toggle" data-target="sec-research" aria-controls="sec-research" aria-expanded="true" title="Collapse section" type="button">
             <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            Collapse
+            <span class="label">Collapse</span>
           </button>
         </h2>
         <div class="section-body">
@@ -416,15 +417,8 @@
     tocLinks.forEach(a => a.addEventListener('click', (e) => { setActive(e.currentTarget.getAttribute('href').slice(1)); }));
     window.addEventListener('scroll', () => { if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) setActive('research'); });
 
-    // Collapsibles — robust delegated handler + aria-controls init
-    document.querySelectorAll('.sec-toggle').forEach(btn => {
-      const targetId = btn.getAttribute('data-target');
-      if (targetId) btn.setAttribute('aria-controls', targetId);
-    });
-
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.sec-toggle');
-      if (!btn) return;
+    // Collapsibles — per-button robust handler
+    function toggleSection(btn) {
       const targetId = btn.getAttribute('data-target');
       const sec = (targetId && document.getElementById(targetId)) || btn.closest('section');
       if (!sec) return;
@@ -434,15 +428,15 @@
       btn.setAttribute('aria-expanded', String(!isCollapsed));
       const svg = btn.querySelector('svg');
       if (svg) svg.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
-      // toggle label text
-      try {
-        const txt = isCollapsed ? ' Expand' : ' Collapse';
-        const tn = document.createTextNode(txt);
-        // Ensure last child is text node after svg
-        if (btn.childNodes.length > 0) {
-          if (btn.lastChild.nodeType === Node.TEXT_NODE) btn.lastChild.nodeValue = txt; else btn.appendChild(tn);
-        } else { btn.appendChild(tn); }
-      } catch(_){}
+      const label = btn.querySelector('.label');
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    }
+
+    document.querySelectorAll('.sec-toggle').forEach(btn => {
+      btn.addEventListener('click', () => toggleSection(btn));
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSection(btn); }
+      });
     });
 
     document.addEventListener('DOMContentLoaded', () => { if (window.innerWidth <= 1024) document.getElementById('mobileBar').style.display = 'flex'; });
